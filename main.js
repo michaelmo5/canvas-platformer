@@ -90,6 +90,8 @@ class Player {
 
 		this.jumping = false;
 		this.jumpCount = 0;
+
+		this.duck = false;
 	}
 
 	update(deltaTime){
@@ -118,6 +120,13 @@ class Player {
 		}
 		this.x += this.speedX * deltaTime;
 
+		// Duck
+		if(17 in KEYS || 83 in KEYS || 40 in KEYS){
+			this.duck = true;
+		} else {
+			this.duck = false;
+		}
+
 		// Stop falling
 		if(this.y >= 2 * resolution.y / 3){
 			this.y = 2* resolution.y / 3;
@@ -144,6 +153,10 @@ class Player {
 		// Jump asset
 		if(this.y < 2* resolution.y / 3){
 			this.a = ASSETS.get('P1_JUMP');
+		}
+
+		if(this.duck){
+			this.a = ASSETS.get('P1_DUCK');
 		}
 	}
 
