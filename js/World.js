@@ -11,7 +11,7 @@ class World {
         this.objects.push(base);
 
         this.next_dir = randomInt(0, 1) == 1;    // true - Right, false - Left
-        this.gen(5);
+        this.gen(10);
 	}
 
 	update(deltaTime){

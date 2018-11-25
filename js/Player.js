@@ -70,45 +70,44 @@ class Player {
 			this.move_with_platform = false;
 		}
 
-		// if(this.in_air){
-		// 	this.move_with_platform = false;
+		if(this.in_air){
+			this.move_with_platform = false;
 
-		// 	// Jump on other platforms
-		// 	let playerObj = this;
-		// 	WORLD.objects.forEach((p, index) => {
-		// 		if(p.type == 'platform' && index > 0){
-		// 			if(
-		// 				playerObj.x < p.x + p.width &&
-		// 				playerObj.x + playerObj.a.width > p.x &&
-		// 				playerObj.y <= p.y &&
-		// 				playerObj.prevPOS.y > p.y
-		// 			){
-		// 				playerObj.y = p.y;
-		// 				playerObj.jumpCount = 0;
-		// 				playerObj.jumping = false;
+			// Jump on other platforms
+			let playerObj = this;
+			WORLD.objects.forEach((p, index) => {
+				if(p.type == 'platform' && index > 0){
+					if(
+						playerObj.x < p.x + p.width &&
+						playerObj.x + playerObj.a.width > p.x &&
+						playerObj.y >= p.y &&
+						playerObj.prevPOS.y <= p.y
+					){
+						playerObj.y = p.y;
+						playerObj.speedY = playerObj.speedY < 0 ? playerObj.speedY : 0;
+						playerObj.jumpCount = 0;
+						playerObj.jumping = false;
 
-		// 				playerObj.in_air = false;
-		// 				playerObj.move_with_platform = true;
-		// 				playerObj.moving_platform_index = index;
+						playerObj.in_air = false;
+						playerObj.move_with_platform = true;
+						playerObj.moving_platform_index = index;
+					}
+				}
+			});
+		}
 
-		// 				console.log('Platform colision!');
-		// 			}
-		// 		}
-		// 	});
-		// }
-
-		// if(this.move_with_platform && this.speedX == 0 && this.moving_platform_index > 0){
-		// 	let movingPlatform = WORLD.objects[this.moving_platform_index];
-		// 	if(movingPlatform.moving){
-		// 		if(movingPlatform.dir){
-		// 			// Right
-		// 			this.x += movingPlatform.move_speed * deltaTime;
-		// 		} else {
-		// 			// Left
-		// 			this.x -= movingPlatform.move_speed * deltaTime;
-		// 		}
-		// 	}
-		// }
+		if(this.move_with_platform && this.speedX == 0 && this.moving_platform_index > 0){
+			let movingPlatform = WORLD.objects[this.moving_platform_index];
+			if(movingPlatform.moving){
+				if(movingPlatform.dir){
+					// Right
+					this.x += movingPlatform.move_speed * deltaTime;
+				} else {
+					// Left
+					this.x -= movingPlatform.move_speed * deltaTime;
+				}
+			}
+		}
 
 		// Asset change on move
 		if(this.speedX != 0 && !this.in_air){

@@ -4,10 +4,6 @@ const ctx = canvas.getContext("2d");
 
 var resolution = {x: 1920, y: 1080};
 
-window.addEventListener('resize', function(){
-	resizeCanvas();
-});
-
 const GRAVITY = 1500;
 
 var PLAYER;
@@ -83,6 +79,10 @@ function mainLoop() {
 	then = now;
 	requestAnimationFrame(mainLoop);	
 }
+
+window.addEventListener('resize', function(){
+	resizeCanvas();
+});
 
 document.addEventListener('DOMContentLoaded', function(){
     resizeCanvas();
