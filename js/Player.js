@@ -166,14 +166,14 @@ class Player {
 			ctx.restore();
 		}
 
-		// Draw Player BOX
-		ctx.lineWidth = 0.5;
-		ctx.rect(this.x, this.y - this.a.height, this.a.width, this.a.height);
-		ctx.stroke();
+		// // Draw Player BOX
+		// ctx.lineWidth = 0.5;
+		// ctx.rect(this.x, this.y - this.a.height, this.a.width, this.a.height);
+		// ctx.stroke();
 
-		// Draw position Circle
-		ctx.beginPath();
-		ctx.arc(this.x, this.y, 10, 0, 2*PI);
-		ctx.stroke();
+		// // Draw position Circle
+		// ctx.beginPath();
+		// ctx.arc(this.x, this.y, 10, 0, 2*PI);
+		// ctx.stroke();
 	}
 }

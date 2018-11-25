@@ -47,17 +47,17 @@ class Platform {
     }
 
 	render(){
-		// Draw position Circle
-		ctx.beginPath();
-		ctx.arc(this.x, this.y, 5, 0, 2*PI);
-		ctx.stroke();
+		// // Draw position Circle
+		// ctx.beginPath();
+		// ctx.arc(this.x, this.y, 5, 0, 2*PI);
+		// ctx.stroke();
 
-		// Draw length line
-		ctx.lineWidth = 0.5;
-		ctx.beginPath();
-		ctx.moveTo(this.x, this.y);
-		ctx.lineTo(this.x + this.width, this.y);
-		ctx.stroke();
+		// // Draw length line
+		// ctx.lineWidth = 0.5;
+		// ctx.beginPath();
+		// ctx.moveTo(this.x, this.y);
+		// ctx.lineTo(this.x + this.width, this.y);
+		// ctx.stroke();
 
         // Draw corners
         ctx.drawImage(this.asset_left, this.x, this.y);
