@@ -4,16 +4,6 @@ const ctx = canvas.getContext("2d");
 
 var resolution = {x: 1920, y: 1080};
 
-function clear(){
-	ctx.fillStyle = "#FFFFFF";
-	ctx.fillRect(0, 0, resolution.x, resolution.y);
-}
-
-function resizeCanvas() {
-	canvas.width = resolution.x = window.innerWidth;
-	canvas.height = resolution.y =  window.innerHeight;
-}
-
 window.addEventListener('resize', function(){
 	resizeCanvas();
 });
@@ -26,7 +16,7 @@ var WORLD;
 var KEYS = {};
 
 function setup(){
-	ASSETS = new Assets(mainLoop);
+	ASSETS = new Assets(start);
 	ASSETS.add('./assets/bg.jpg', 'BG');
 
 	ASSETS.add('./assets/p1_stand.png', 'PLAYER_1');
@@ -50,9 +40,13 @@ function setup(){
 	ASSETS.add('./assets/tiles/stoneHalfRight.png', 'tile_RIGHT');
 
 	ASSETS.load();
+}
 
+function start(){
 	PLAYER = new Player();
 	WORLD = new World();
+
+	mainLoop();
 }
 
 function update(deltaTime){

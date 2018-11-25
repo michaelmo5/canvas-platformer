@@ -1,8 +1,16 @@
 class Platform {
 	constructor(){
 		this.x = 500;
-		this.y = 500;
-		this.length = Math.ceil(Math.random() * 300) + 200;
+        this.y = 500;
+        
+        this.mid_count = randomInt(0, 5);
+
+        this.asset_left = ASSETS.get('tile_LEFT');
+		this.asset_mid = ASSETS.get('tile_MID');
+        this.asset_right = ASSETS.get('tile_RIGHT');
+        
+        this.width = this.asset_left.width + (this.asset_mid.width * this.mid_count) + this.asset_right.width;
+        this.height = Math.max(this.asset_left.height, this.asset_mid.height, this.asset_right.height);
 	}
 
 	render(){
@@ -15,25 +23,16 @@ class Platform {
 		ctx.lineWidth = 0.5;
 		ctx.beginPath();
 		ctx.moveTo(this.x, this.y);
-		ctx.lineTo(this.x + this.length, this.y);
+		ctx.lineTo(this.x + this.width, this.y);
 		ctx.stroke();
 
-		let t_left = ASSETS.get('tile_LEFT');
-		let t_mid = ASSETS.get('tile_MID');
-		let t_right = ASSETS.get('tile_RIGHT');
+        // Draw corners
+        ctx.drawImage(this.asset_left, this.x, this.y);
+        ctx.drawImage(this.asset_right, this.x + this.width - this.asset_right.width, this.y);
 
-		// Draw middle
-		let mid_width = this.length - t_left.width - t_right.width;
-		let times_fit = mid_width / t_mid.width;
-		let repeat = Math.ceil(times_fit);
-		let ratio = times_fit / repeat;
-
-		for(let i=0; i<repeat; i++){
-			ctx.drawImage(t_mid, this.x + t_left.width + (i * t_mid.width * ratio), this.y, t_mid.width * ratio + 1, t_mid.height);
-		}
-
-		// Draw corners
-		ctx.drawImage(t_left, this.x, this.y);
-		ctx.drawImage(t_right, this.x + this.length - 70, this.y);
+        // Draw middle
+        for(let i=0; i<this.mid_count; i++){
+            ctx.drawImage(this.asset_mid, this.x + this.asset_left.width + (i * this.asset_mid.width), this.y);
+        }
 	}
 }
