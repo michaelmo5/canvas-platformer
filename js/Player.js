@@ -13,17 +13,27 @@ class Player {
 		this.jumping = false;
 		this.jumpCount = 0;
 
+		this.in_air = false;
+
 		this.duck = false;
+
+		this.move_with_platform = false;
+		this.moving_platform_index = 0;
+
+		this.prevPOS = {x: this.x, y: this.y};
 	}
 
 	update(deltaTime){
+		this.prevPOS = {x: this.x, y: this.y};
+
+		this.in_air = true;
+
 		// Jumping control
 		if(!this.jumping && 32 in KEYS){ this.jumping = true; delete KEYS[32]; }
-		// if(this.jumping && !(32 in KEYS)){ this.jumping = false; }
 
 		// Jumping
 		if(this.jumping && this.jumpCount < 2){
-			this.speedY = -700;
+			this.speedY = -800;
 			this.jumpCount++;
 			this.jumping = false;
 		}
@@ -50,14 +60,58 @@ class Player {
 		}
 
 		// Stop falling
-		if(this.y >= 2 * resolution.y / 3){
-			this.y = 2* resolution.y / 3;
+		let base = WORLD.objects[0];
+		if(this.y >= base.y){
+			this.y = base.y;
 			this.jumpCount = 0;
 			this.jumping = false;
+
+			this.in_air = false;
+			this.move_with_platform = false;
 		}
 
+		// if(this.in_air){
+		// 	this.move_with_platform = false;
+
+		// 	// Jump on other platforms
+		// 	let playerObj = this;
+		// 	WORLD.objects.forEach((p, index) => {
+		// 		if(p.type == 'platform' && index > 0){
+		// 			if(
+		// 				playerObj.x < p.x + p.width &&
+		// 				playerObj.x + playerObj.a.width > p.x &&
+		// 				playerObj.y <= p.y &&
+		// 				playerObj.prevPOS.y > p.y
+		// 			){
+		// 				playerObj.y = p.y;
+		// 				playerObj.jumpCount = 0;
+		// 				playerObj.jumping = false;
+
+		// 				playerObj.in_air = false;
+		// 				playerObj.move_with_platform = true;
+		// 				playerObj.moving_platform_index = index;
+
+		// 				console.log('Platform colision!');
+		// 			}
+		// 		}
+		// 	});
+		// }
+
+		// if(this.move_with_platform && this.speedX == 0 && this.moving_platform_index > 0){
+		// 	let movingPlatform = WORLD.objects[this.moving_platform_index];
+		// 	if(movingPlatform.moving){
+		// 		if(movingPlatform.dir){
+		// 			// Right
+		// 			this.x += movingPlatform.move_speed * deltaTime;
+		// 		} else {
+		// 			// Left
+		// 			this.x -= movingPlatform.move_speed * deltaTime;
+		// 		}
+		// 	}
+		// }
+
 		// Asset change on move
-		if(this.speedX != 0 && this.y == 2 * resolution.y / 3){
+		if(this.speedX != 0 && !this.in_air){
 			// Moving and not in air
 			let animDelta = performance.now() - this.lastAniFrame;
 			if(animDelta >= this.aimationUpdateInterval){
@@ -73,12 +127,21 @@ class Player {
 		}
 
 		// Jump asset
-		if(this.y < 2* resolution.y / 3){
+		if(this.in_air){
 			this.a = ASSETS.get('P1_JUMP');
 		}
 
 		if(this.duck){
 			this.a = ASSETS.get('P1_DUCK');
+		}
+
+		// Screen borders cap
+		if(this.x <= 0){
+			this.x = 0;
+		}
+
+		if(this.x >= resolution.x - this.a.width){
+			this.x = resolution.x - this.a.width;
 		}
 	}
 

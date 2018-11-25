@@ -68,13 +68,6 @@ function render(){
 	// Level
 	WORLD.render();
 
-	// Line
-	ctx.beginPath();
-	ctx.moveTo(0, 2*resolution.y/3);
-	ctx.lineTo(resolution.x, 2*resolution.y/3);
-	ctx.lineWidth = 2;
-	ctx.stroke();
-
 	// Player
 	PLAYER.render();
 }
