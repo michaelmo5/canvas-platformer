@@ -36,6 +36,8 @@ class Player {
 			this.speedY = -800;
 			this.jumpCount++;
 			this.jumping = false;
+
+			WORLD.moving = true;
 		}
 
 		// Gravity
@@ -106,6 +108,8 @@ class Player {
 					// Left
 					this.x -= movingPlatform.move_speed * deltaTime;
 				}
+
+				this.y = movingPlatform.y;
 			}
 		}
 
@@ -141,6 +145,12 @@ class Player {
 
 		if(this.x >= resolution.x - this.a.width){
 			this.x = resolution.x - this.a.width;
+		}
+
+		// GameOver
+		if(this.y > resolution.y){
+			gameON = false;
+			alert('Game Over! Score: ' + WORLD.score);
 		}
 	}
 

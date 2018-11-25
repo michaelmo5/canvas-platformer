@@ -70,6 +70,7 @@ function render(){
 
 const requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame;
 
+var gameON = true;
 var then = performance.now();
 function mainLoop() {
 	var now = performance.now();
@@ -77,7 +78,9 @@ function mainLoop() {
 	update(delta / 1000);
 	render();
 	then = now;
-	requestAnimationFrame(mainLoop);	
+	if(gameON){
+		requestAnimationFrame(mainLoop);	
+	}
 }
 
 window.addEventListener('resize', function(){

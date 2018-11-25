@@ -3,6 +3,9 @@ class World {
 		this.x = 0;
         this.y = 0;
 
+        this.moving = false;
+        this.score = 0;
+
         // World objects with type parameter
 		this.objects = [];
 
@@ -15,6 +18,20 @@ class World {
 	}
 
 	update(deltaTime){
+        if(this.moving){
+            let worldObj = this;
+            this.objects.forEach((o) => {
+                if(o.y <= resolution.y){
+                    o.y += 100 * deltaTime;
+
+                    if(o.y > resolution.y){
+                        worldObj.gen(1);
+                        worldObj.score++;
+                    }
+                }
+            });
+        }
+
 		this.objects.forEach((o) => {
 			o.update(deltaTime);
 		});
